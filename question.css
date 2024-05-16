@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
+.wrapper-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(1, 1, 1, 0.5);
+}
+
+.content {
+    width: 75vw;
+    height: 75vh;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-37.5vw, -37.5vh);
+    border-radius: 2vh;
+}
+
+.content-title {
+    height: 10vh;
+    background-color: rgba(73, 112, 152, 0.3);
+    border-top-left-radius: 2vh;
+    border-top-right-radius: 2vh;
+    padding: 2vh;
+    text-align: center;
+}
+
+.divider {
+    height: 1px;
+    border: 1px solid rgba(1, 1, 1, 0.4);
+}
+
+.content-body {
+    padding: 15px
+}
+
+#question {
+    font-weight: 600;
+    font-size: 35px;
+    margin-bottom: 2vh;
+}
+
+#example {
+    font-size: 28px;
+    margin-bottom: 2vh;
+}
+
+.choice {
+    padding: 20px;
+    font-size: 20px;
+}
+
+a {
+    text-decoration: none;
+    /* 밑줄 제거 */
+    color: inherit;
+    /* 부모 요소의 텍스트 색상 상속 */
+}
+
+a:hover {
+    color: blue;
+    /* 마우스를 올렸을 때 텍스트 색상 */
+    text-decoration: underline;
+    /* 마우스를 올렸을 때 밑줄 추가 */
+}
+
+.open-answer {
+    padding: 20px;
+    text-align: right;
+}
+
+button {
+    border: 1px solid rgba(1, 1, 1, 0.5);
+    background-color: rgb(66, 73, 222, 0.2);
+    font-size: 25px;
+    transition: 0.5s
+}
+
+button:hover {
+    background-color: rgb(66, 73, 222, 1);
+    color: white;
+    transition: 0.5s
+}
+
+.answer {
+    text-align: center;
+    font-size: 35px;
+    color: rgb(255, 0, 0, 0.5);
+    display: none;
+}
+
+.next {
+    font-size: 40px;
+    position: absolute;
+    right: 5vw;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    /* 가로로 중앙 정렬 */
+    align-items: center;
+    height: 10vh;
+    width: 10vh;
+    transform: translateY(-5vh);
+}
