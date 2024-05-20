@@ -1329,5 +1329,38 @@ let solution = [
         ],
         "answer": "내 서버 이미지를 이용해 서버를 생성할 때, 원본 서버의 부팅스토리지 종류와 동일하게 생성된다.",
         "example": ""
+    },
+    {
+        "question": "MS-SQL default port(기본포트)는?",
+        "choice": [
+            "3389",
+            "3390",
+            "1521",
+            "3306"
+        ],
+        "answer": "3389",
+        "example": ""
+    },
+     {
+        "question": "네이버 챗봇의 기능이 아닌 것은?",
+        "choice": [
+            "높은 한국어 정답률",
+            "자연어 처리 기술과 머신러닝기반 학습 알고리즘",
+            "다국어 미지원",
+            "답변 컴포지트 제공"
+        ],
+        "answer": "다국어 미지원",
+        "example": ""
+    },
+    {
+        "question": "다음에서 설명하는 상품의 이름은 무엇인가요?",
+        "choice": [
+            "Cloud Hadoop",
+            "Elasticsearch",
+            "Cloud Search",
+            "Cloud Log Analytics"
+        ],
+        "answer": "Cloud Search",
+        "example": "사용자의 웹사이트에 검색 기능을 제공하는 상품으로 네이버 형태소 분석 처리기를 기반으로 만들어진 상품"
     }
 ]
