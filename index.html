@@ -16,6 +16,16 @@
         let targetArr = {}
         let solveProblem = {}
         let success = []
+        let fail = []
+        let compFlag = false
+
+        function loadComplete() {
+            if (compFlag === false) {
+                document.getElementById('complete').style.display = 'block'
+                document.getElementById('unComplete').style.display = 'none'
+                
+            }
+        }
         function nextQuestion() {
             init()
             document.getElementById('answer').style.display = 'none'
@@ -47,8 +57,11 @@
             }
         }
         function init() {
+            document.getElementById('complete').style.display = 'none'
             if (Object.keys(solveProblem).length === 121) {
+                compFlag = false
                 alert(`모든 문제를 풀었습니다!! ${success.length} / 121`)
+                loadComplete()
                 return
             }
 
@@ -80,27 +93,41 @@
                 </div>
                 <div class="divider"></div>
                 <div class="content-body">
-                    <div id="question"></div>
-                    <div id="example"></div>
-                    <div class="choice">
-                        <a href="javascript:void(0)" onclick="answering(1)">
-                            <p id="choice1"></p>
-                        </a>
-                        <a href="javascript:void(0)" onclick="answering(2)">
-                            <p id="choice2"></p>
-                        </a>
-                        <a href="javascript:void(0)" onclick="answering(3)">
-                            <p id="choice3"></p>
-                        </a>
-                        <a href="javascript:void(0)" onclick="answering(4)">
-                            <p id="choice4"></p>
-                        </a>
+                    <div id="complete">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>문제</th>
+                                    <th>정답</th>
+                                </tr>
+                            </thead>
+                            <tbody id="complete-body">
+                            </tbody>
+                        </table>
                     </div>
+                    <div id="unComplete">
+                        <div id="question"></div>
+                        <div id="example"></div>
+                        <div class="choice">
+                            <a href="javascript:void(0)" onclick="answering(1)">
+                                <p id="choice1"></p>
+                            </a>
+                            <a href="javascript:void(0)" onclick="answering(2)">
+                                <p id="choice2"></p>
+                            </a>
+                            <a href="javascript:void(0)" onclick="answering(3)">
+                                <p id="choice3"></p>
+                            </a>
+                            <a href="javascript:void(0)" onclick="answering(4)">
+                                <p id="choice4"></p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="open-answer">
+                        <button onclick="checkAnswer()">정답 보기</button>
+                    </div>
+                    <div class="answer" id="answer"></div>
                 </div>
-                <div class="open-answer">
-                    <button onclick="checkAnswer()">정답 보기</button>
-                </div>
-                <div class="answer" id="answer"></div>
             </div>
             <button class="next" onclick="nextQuestion()">▶</button>
         </div>
