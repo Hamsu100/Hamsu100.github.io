@@ -23,7 +23,7 @@
             if (compFlag === false) {
                 document.getElementById('complete').style.display = 'block'
                 document.getElementById('unComplete').style.display = 'none'
-                
+
             }
         }
         function nextQuestion() {
@@ -40,7 +40,7 @@
                 success.push(targetIdx)
                 nextQuestion()
             } else {
-                alert('실패', targetArr.answer)
+                alert(`실패, ${targetArr.answer}`)
                 nextQuestion()
             }
         }
@@ -68,18 +68,45 @@
             let rNum = exceptDup()
             targetIdx = rNum
             targetArr = solution[rNum]
-
+            let result = []
+            while (result.length < 4) {
+                let rArr = getRandomInt(3)
+                if (!result.includes(rArr)) {
+                    result.push(rArr)
+                }
+            }
             document.getElementById('question').innerText = targetArr.question
             document.getElementById('example').innerText = targetArr.example
-            document.getElementById('choice1').innerText = `1) ${targetArr.choice[0]}`
-            document.getElementById('choice2').innerText = `2) ${targetArr.choice[1]}`
-            document.getElementById('choice3').innerText = `3) ${targetArr.choice[2]}`
-            document.getElementById('choice4').innerText = `4) ${targetArr.choice[3]}`
+            document.getElementById('choice1').innerText = `1) ${targetArr.choice[result[0]]}`
+            document.getElementById('choice2').innerText = `2) ${targetArr.choice[result[1]]}`
+            document.getElementById('choice3').innerText = `3) ${targetArr.choice[result[2]]}`
+            document.getElementById('choice4').innerText = `4) ${targetArr.choice[result[3]]}`
         }
         document.addEventListener('DOMContentLoaded', function () {
             console.log('DOM fully loaded and parsed');
             init()
         });
+        document.addEventListener('keydown', function (e) {
+            let progressCondition = [
+                { key: '1', code: 'Digit1' },
+                { key: '2', code: 'Digit2' },
+                { key: '3', code: 'Digit3' },
+                { key: '4', code: 'Digit4' },
+            ]
+            let flag = false
+            for (let i = 0; i < progressCondition.length; i++) {
+                let cond = progressCondition[i]
+                console.log(cond.key, cond.code, e.key, e.code)
+                if (cond.key === e.key && cond.code === e.code) {
+                    flag = true
+                    break
+                }
+            }
+            if (!flag) {
+                return
+            }
+            answering(e.key)
+        })
     </script>
     <link rel="stylesheet" href="question.css">
 </head>
