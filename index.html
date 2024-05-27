@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기출 문제 For NCA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
     <script src="./solution.js"></script>
     <script>
         let targetIdx;
@@ -18,35 +18,45 @@
         let success = []
         let fail = []
         let compFlag = false
+        let rArr = []
 
         function loadComplete() {
-            if (compFlag === false) {
+            if (compFlag === true) {
                 document.getElementById('complete').style.display = 'block'
                 document.getElementById('unComplete').style.display = 'none'
-
+            }
+            document.getElementById('complete').innerHTML = `<h1>${success.length}:${fail.length} / ${solution.length}</h1>`
+            for (let i = 0; i < fail.length; i++) {
+                document.getElementById('complete-body').innerHTML = `<tr><td>${fail[i]} / ${solution[fail[i]].question}</td><td>${solution[fail[i]].answer}</td></tr>`
             }
         }
+
         function nextQuestion() {
             init()
             document.getElementById('answer').style.display = 'none'
         }
+
         function checkAnswer() {
             document.getElementById('answer').style.display = 'block'
             document.getElementById('answer').innerText = targetArr.answer
         }
+
         function answering(target) {
-            if (targetArr.choice[target - 1] === targetArr.answer) {
+            if (targetArr.choice[rArr[target - 1]] === targetArr.answer) {
                 alert('정답')
                 success.push(targetIdx)
                 nextQuestion()
             } else {
-                alert(`실패, ${targetArr.answer}`)
+                alert(`실패, 답: ${targetArr.answer}\n선택: ${targetArr.choice[rArr[target - 1]]}`)
+                fail.push(targetIdx)
                 nextQuestion()
             }
         }
+
         function getRandomInt(max) {
             return Math.floor(Math.random() * (max + 1));
         }
+
         function exceptDup() {
             let rNum = getRandomInt(solution.length)
             if (solveProblem[rNum] === 'exist') {
@@ -56,47 +66,66 @@
                 return rNum
             }
         }
+
         function init() {
             document.getElementById('complete').style.display = 'none'
-            if (Object.keys(solveProblem).length === 121) {
-                compFlag = false
+
+            let goingFlag = true
+            let rNum = exceptDup()
+            if (!(rNum !== 0 && !rNum)) {
+                targetIdx = rNum
+                targetArr = solution[rNum]
+            } else {
+                goingFlag = false
+            }
+            let valueArr = []
+            if (goingFlag) {
+                valueArr = Object.entries(targetArr)
+                if (valueArr.length === 0) {
+                    alert('value length check')
+                    goingFlag = false
+                }
+                valueArr.map(([key, value]) => {
+                    if (!value && key !== 'example') {
+                        alert('value check')
+                        goingFlag = false
+                    }
+                })
+            }
+            if (Object.keys(solveProblem).length === 121 || !goingFlag) {
+                compFlag = true
                 alert(`모든 문제를 풀었습니다!! ${success.length} / 121`)
                 loadComplete()
                 return
             }
-
-            let rNum = exceptDup()
-            targetIdx = rNum
-            targetArr = solution[rNum]
-            let result = []
-            while (result.length < 4) {
-                let rArr = getRandomInt(3)
-                if (!result.includes(rArr)) {
-                    result.push(rArr)
+            while (rArr.length < 4) {
+                let rNum = getRandomInt(3)
+                if (!rArr.includes(rNum)) {
+                    rArr.push(rNum)
                 }
             }
             document.getElementById('question').innerText = targetArr.question
             document.getElementById('example').innerText = targetArr.example
-            document.getElementById('choice1').innerText = `1) ${targetArr.choice[result[0]]}`
-            document.getElementById('choice2').innerText = `2) ${targetArr.choice[result[1]]}`
-            document.getElementById('choice3').innerText = `3) ${targetArr.choice[result[2]]}`
-            document.getElementById('choice4').innerText = `4) ${targetArr.choice[result[3]]}`
+            document.getElementById('choice1').innerText = `1) ${targetArr.choice[rArr[0]]}`
+            document.getElementById('choice2').innerText = `2) ${targetArr.choice[rArr[1]]}`
+            document.getElementById('choice3').innerText = `3) ${targetArr.choice[rArr[2]]}`
+            document.getElementById('choice4').innerText = `4) ${targetArr.choice[rArr[3]]}`
         }
+
         document.addEventListener('DOMContentLoaded', function () {
             console.log('DOM fully loaded and parsed');
             init()
         });
         document.addEventListener('keydown', function (e) {
             let progressCondition = [
-                { key: '1', code: 'Digit1' },
-                { key: '2', code: 'Digit2' },
-                { key: '3', code: 'Digit3' },
-                { key: '4', code: 'Digit4' },
+                {key: '1', code: 'Digit1'},
+                {key: '2', code: 'Digit2'},
+                {key: '3', code: 'Digit3'},
+                {key: '4', code: 'Digit4'},
             ]
             let flag = false
             for (let i = 0; i < progressCondition.length; i++) {
                 let cond = progressCondition[i]
-                console.log(cond.key, cond.code, e.key, e.code)
                 if (cond.key === e.key && cond.code === e.code) {
                     flag = true
                     break
@@ -112,53 +141,53 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="wrapper-overlay">
-            <div class="content">
-                <div class="content-title">
-                    <h1>문제 풀이</h1>
-                </div>
-                <div class="divider"></div>
-                <div class="content-body">
-                    <div id="complete">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>문제</th>
-                                    <th>정답</th>
-                                </tr>
-                            </thead>
-                            <tbody id="complete-body">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="unComplete">
-                        <div id="question"></div>
-                        <div id="example"></div>
-                        <div class="choice">
-                            <a href="javascript:void(0)" onclick="answering(1)">
-                                <p id="choice1"></p>
-                            </a>
-                            <a href="javascript:void(0)" onclick="answering(2)">
-                                <p id="choice2"></p>
-                            </a>
-                            <a href="javascript:void(0)" onclick="answering(3)">
-                                <p id="choice3"></p>
-                            </a>
-                            <a href="javascript:void(0)" onclick="answering(4)">
-                                <p id="choice4"></p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="open-answer">
-                        <button onclick="checkAnswer()">정답 보기</button>
-                    </div>
-                    <div class="answer" id="answer"></div>
-                </div>
+<div class="wrapper">
+    <div class="wrapper-overlay">
+        <div class="content">
+            <div class="content-title">
+                <h1>문제 풀이</h1>
             </div>
-            <button class="next" onclick="nextQuestion()">▶</button>
+            <div class="divider"></div>
+            <div class="content-body">
+                <div id="complete">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>문제</th>
+                            <th>정답</th>
+                        </tr>
+                        </thead>
+                        <tbody id="complete-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="unComplete">
+                    <div id="question"></div>
+                    <div id="example"></div>
+                    <div class="choice">
+                        <a href="javascript:void(0)" onclick="answering(1)">
+                            <p id="choice1"></p>
+                        </a>
+                        <a href="javascript:void(0)" onclick="answering(2)">
+                            <p id="choice2"></p>
+                        </a>
+                        <a href="javascript:void(0)" onclick="answering(3)">
+                            <p id="choice3"></p>
+                        </a>
+                        <a href="javascript:void(0)" onclick="answering(4)">
+                            <p id="choice4"></p>
+                        </a>
+                    </div>
+                </div>
+                <div class="open-answer">
+                    <button onclick="checkAnswer()">정답 보기</button>
+                </div>
+                <div class="answer" id="answer"></div>
+            </div>
         </div>
+        <button class="next" onclick="nextQuestion()">▶</button>
     </div>
+</div>
 </body>
 
 </html>
