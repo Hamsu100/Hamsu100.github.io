@@ -110,3 +110,16 @@ button:hover {
     width: 10vh;
     transform: translateY(-5vh);
 }
+
+.sub-content {
+    position: absolute;
+    right:0;
+    top:0;
+    background-color: white;
+    font-size: 30px;
+    padding:10px;
+    width: 200px;
+    height:130px;
+    border-bottom: 1px solid red;
+    border-left: 1px solid red;
+}
