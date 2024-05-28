@@ -1331,17 +1331,6 @@ let solution = [
         "example": ""
     },
     {
-        "question": "MS-SQL default port(기본포트)는?",
-        "choice": [
-            "3389",
-            "3390",
-            "1521",
-            "3306"
-        ],
-        "answer": "3389",
-        "example": ""
-    },
-    {
         "question": "네이버 챗봇의 기능이 아닌 것은?",
         "choice": [
             "높은 한국어 정답률",
